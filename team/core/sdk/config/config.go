@@ -36,20 +36,20 @@ func (e *Settings) Init() {
 }
 
 func (e *Settings) init() {
-	// e.Settings.Logger.Setup()
+	e.Settings.Logger.Setup()
 	e.Settings.multiDatabase()
 	e.runCallback()
 }
 
 // Config 配置集合
 type Config struct {
-	Application *Application `yaml:"application"`
-	Ssl         *Ssl         `yaml:"ssl"`
-	// Logger      *Logger               `yaml:"logger"`
-	Jwt       *Jwt                  `yaml:"jwt"`
-	Database  *Database             `yaml:"database"`
-	Databases *map[string]*Database `yaml:"databases"`
-	Gen       *Gen                  `yaml:"gen"`
+	Application *Application          `yaml:"application"`
+	Ssl         *Ssl                  `yaml:"ssl"`
+	Logger      *Logger               `yaml:"logger"`
+	Jwt         *Jwt                  `yaml:"jwt"`
+	Database    *Database             `yaml:"database"`
+	Databases   *map[string]*Database `yaml:"databases"`
+	Gen         *Gen                  `yaml:"gen"`
 	// Cache       *Cache                `yaml:"cache"`
 	// Queue       *Queue                `yaml:"queue"`
 	// Locker      *Locker               `yaml:"locker"`
