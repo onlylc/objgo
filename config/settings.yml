@@ -1,7 +1,4 @@
 settings:
-  evanice:
-    name: evanice
-    age: 30
   application:
     # dev开发环境 test测试环境 prod线上环境
     mode: dev
