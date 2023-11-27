@@ -3,11 +3,13 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"objgo/cmd/api"
 	"objgo/cmd/config"
 	"objgo/common/global"
 	"os"
 
 	"objgo/team/core/sdk/pkg"
+
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +39,7 @@ func tip() {
 }
 
 func init() {
-	// rootCmd.AddCommand(api.StartCmd)
+	rootCmd.AddCommand(api.StartCmd)
 	// rootCmd.AddCommand(migrate.StartCmd)
 	// rootCmd.AddCommand(version.StartCmd)
 	rootCmd.AddCommand(config.StartCmd)
