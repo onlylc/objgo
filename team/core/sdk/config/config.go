@@ -64,6 +64,9 @@ func (e *Config) multiDatabase() {
 		}
 
 	}
+	for k, v := range *e.Databases {
+		fmt.Println(k, v)
+	}
 }
 
 // Setup 载入配置文件

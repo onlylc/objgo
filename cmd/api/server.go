@@ -40,7 +40,7 @@ func setup() {
 	config.Setup(
 		file.NewSource(file.WithPath(configYml)),
 		database.Setup,
-		storage.Setup,
+		// storage.Setup,
 	)
 	//注册监听函数
 	// queue := sdk.Runtime.GetMemoryQueue("")
