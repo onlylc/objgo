@@ -23,6 +23,7 @@ require (
 	github.com/robinjoseph08/redisqueue/v2 v2.1.0
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/cobra v1.8.0
+	github.com/unrolled/secure v1.13.0
 	go.uber.org/zap v1.26.0
 	gorm.io/driver/mysql v1.4.3
 	gorm.io/driver/postgres v1.5.4

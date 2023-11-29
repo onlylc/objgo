@@ -3,9 +3,10 @@ package config
 // import (
 // 	"objgo/team/core/storage"
 // 	"objgo/team/core/storage/queue"
-// 	"github.com/go-redis/redis/v7"
-// 	"github.com/robinjoseph08/redisqueue/v2"
 // 	"time"
+
+// 	"github.com/redis/go-redis/v9"
+// 	"github.com/robinjoseph08/redisqueue/v2"
 // )
 
 // type Queue struct {

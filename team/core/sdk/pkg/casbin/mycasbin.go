@@ -1,6 +1,8 @@
 package mycasbin
 
 import (
+	"fmt"
+
 	"github.com/casbin/casbin/v2"
 	// "github.com/casbin/casbin/v2/log"
 	"github.com/casbin/casbin/v2/model"
@@ -33,6 +35,8 @@ func Setup(db *gorm.DB, _ string) *casbin.SyncedEnforcer {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("model.NewMode", m)
+
 	e, err := casbin.NewSyncedEnforcer(m, Apter)
 	if err != nil {
 		panic(err)

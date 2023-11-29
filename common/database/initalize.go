@@ -22,6 +22,8 @@ import (
 // Setup 配置数据
 func Setup() {
 	for k := range toolsConfig.DatabasesConfig {
+		// fmt.Println(k, toolsConfig.DatabasesConfig[k])
+		// * &{mysql user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8&parseTime=True&loc=Local&timeout=1000ms 0 0 0 0 []}
 		setupSimpleDatabase(k, toolsConfig.DatabasesConfig[k])
 	}
 }
@@ -32,7 +34,9 @@ func setupSimpleDatabase(host string, c *toolsConfig.Database) {
 	}
 	log.Infof("%s => %s", host, pkg.Green(c.Source))
 	registers := make([]toolsDB.ResolverConfigure, len(c.Registers))
+	log.Info("registers", registers, "c.Registers", c.Registers)
 	for i := range c.Registers {
+		log.Info("123132", registers, c.Registers, "i", i)
 		registers[i] = toolsDB.NewResolverConfigure(
 			c.Registers[i].Sources,
 			c.Registers[i].Replicas,
@@ -42,6 +46,7 @@ func setupSimpleDatabase(host string, c *toolsConfig.Database) {
 	}
 
 	resolverConfig := toolsDB.NewConfigure(c.Source, c.MaxIdleConns, c.MaxOpenConns, c.ConnMaxIdleTime, c.ConnMaxLifeTime, registers)
+	log.Info("resolverConfig", resolverConfig)
 	db, err := resolverConfig.Init(&gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
@@ -55,6 +60,7 @@ func setupSimpleDatabase(host string, c *toolsConfig.Database) {
 			},
 		),
 	}, opens[c.Driver])
+	log.Info("opens", opens[c.Driver], c.Driver, db)
 
 	if err != nil {
 		log.Fatal(pkg.Red(c.Driver+" connect error :"), err)
@@ -63,7 +69,6 @@ func setupSimpleDatabase(host string, c *toolsConfig.Database) {
 	}
 
 	e := mycasbin.Setup(db, "sys_")
-
 	sdk.Runtime.SetDb(host, db)
 	sdk.Runtime.SetCasbin(host, e)
 }
