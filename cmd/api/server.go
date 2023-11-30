@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"objgo/app/admin/router"
 	"objgo/common/database"
 	"objgo/common/global"
+	common "objgo/common/middleware"
 	"objgo/common/middleware/handler"
 	"objgo/team/core/config/source/file"
 	"objgo/team/core/sdk"
+	"objgo/team/core/sdk/api"
 	"objgo/team/core/sdk/config"
 	"objgo/team/core/sdk/pkg"
 	"os"
@@ -37,12 +40,14 @@ var (
 	}
 )
 
+var AppRouters = make([]func(), 0)
+
 func init() {
 	StartCmd.PersistentFlags().StringVarP(&configYml, "config", "c", "config/settings.yml", "Start server with provided configuration file")
 	StartCmd.PersistentFlags().BoolVarP(&apiCheck, "api", "a", false, "Start server with check api data")
 
 	//注册路由 fixme 其他应用的路由，在本目录新建文件放在init方法
-	// AppRouters = append(AppRouters, router.InitRouter)
+	AppRouters = append(AppRouters, router.InitRouter)
 }
 
 func setup() {
@@ -71,9 +76,9 @@ func run() error {
 	}
 	initRouter()
 
-	// for _, f := range AppRouters {
-	// 	f()
-	// }
+	for _, f := range AppRouters {
+		f()
+	}
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf("%s:%d", config.ApplicationConfig.Host, config.ApplicationConfig.Port),
@@ -136,11 +141,9 @@ func initRouter() {
 		r.Use(handler.TlsHandler())
 	}
 	//r.Use(middleware.Metrics()) //
+	r.Use(common.RequestId(pkg.TrafficKey)).
+		Use(api.SetRequestLogger)
 
-	// r.Use(common.Sentinel()).
-	// 	Use(common.RequestId(pkg.TrafficKey)).
-	// 	Use(api.SetRequestLogger)
-
-	// common.InitMiddleware(r)
+	common.InitMiddleware(r)
 
 }
