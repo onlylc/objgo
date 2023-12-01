@@ -1,8 +1,12 @@
 package pkg
 
 import (
+	"errors"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 const (
@@ -19,4 +23,27 @@ func GenerateMsgIDFromContext(c *gin.Context) string {
 
 	}
 	return requestId
+}
+
+func CompareHashAndPassword(e string, p string) (bool, error) {
+	err := bcrypt.CompareHashAndPassword([]byte(e), []byte(p))
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+// GetOrm 获取orm连接
+func GetOrm(c *gin.Context) (*gorm.DB, error) {
+	idb, exist := c.Get("db")
+	if !exist {
+		return nil, errors.New("db connect not exist")
+	}
+	switch idb.(type) {
+	case *gorm.DB:
+		//新增操作
+		return idb.(*gorm.DB), nil
+	default:
+		return nil, errors.New("db connect not exist")
+	}
 }

@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+	common "objgo/common/middleware"
 	log "objgo/team/core/logger"
 	"objgo/team/core/sdk"
 	"os"
@@ -10,7 +11,7 @@ import (
 )
 
 func InitRouter() {
-	fmt.Println("注册系统路由")
+
 	var r *gin.Engine
 	h := sdk.Runtime.GetEngine()
 	if h == nil {
@@ -27,10 +28,11 @@ func InitRouter() {
 
 	fmt.Println("注册系统路由", r)
 	//the jwt middleware
-	// authMiddleware, err := common.AuthInit()
-	// if err != nil {
-	// 	log.Fatalf("JWT Init Error, %s", err.Error())
-	// }
+	authMiddleware, err := common.AuthInit()
+	if err != nil {
+		log.Fatalf("JWT Init Error, %s", err.Error())
+	}
+	fmt.Println(authMiddleware)
 
 	// 注册系统路由
 

@@ -48,6 +48,7 @@ func init() {
 
 	//注册路由 fixme 其他应用的路由，在本目录新建文件放在init方法
 	AppRouters = append(AppRouters, router.InitRouter)
+
 }
 
 func setup() {
@@ -75,8 +76,8 @@ func run() error {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	initRouter()
-
 	for _, f := range AppRouters {
+
 		f()
 	}
 
@@ -124,7 +125,6 @@ func run() error {
 }
 
 func initRouter() {
-	fmt.Println("============================================================================================initRouter")
 	var r *gin.Engine
 	h := sdk.Runtime.GetEngine()
 	if h == nil {
