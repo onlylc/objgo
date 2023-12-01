@@ -37,4 +37,5 @@ func InitRouter() {
 	// 注册系统路由
 
 	// 注册业务路由
+	InitExamplesRouter(r, authMiddleware)
 }
