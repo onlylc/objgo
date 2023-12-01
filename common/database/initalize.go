@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"time"
 
 	log "objgo/team/core/logger"
@@ -67,7 +68,7 @@ func setupSimpleDatabase(host string, c *toolsConfig.Database) {
 	} else {
 		log.Info(pkg.Green(c.Driver + " connect success !"))
 	}
-
+	fmt.Println("NAMEDB", db.Name())
 	e := mycasbin.Setup(db, "sys_")
 	sdk.Runtime.SetDb(host, db)
 	sdk.Runtime.SetCasbin(host, e)

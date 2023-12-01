@@ -9,6 +9,7 @@ require (
 	github.com/bsm/redislock v0.9.4
 	github.com/casbin/casbin/v2 v2.79.0
 	github.com/chanxuehong/wechat v0.0.0-20230222024006-36f0325263cd
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/gin-gonic/gin v1.9.1

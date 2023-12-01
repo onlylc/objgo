@@ -10,6 +10,7 @@ import (
 )
 
 func InitRouter() {
+	fmt.Println("注册系统路由")
 	var r *gin.Engine
 	h := sdk.Runtime.GetEngine()
 	if h == nil {
@@ -23,7 +24,8 @@ func InitRouter() {
 		log.Fatal("not support other engine")
 		os.Exit(-1)
 	}
-	fmt.Println(r)
+
+	fmt.Println("注册系统路由", r)
 	//the jwt middleware
 	// authMiddleware, err := common.AuthInit()
 	// if err != nil {

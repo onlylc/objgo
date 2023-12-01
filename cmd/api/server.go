@@ -124,6 +124,7 @@ func run() error {
 }
 
 func initRouter() {
+	fmt.Println("============================================================================================initRouter")
 	var r *gin.Engine
 	h := sdk.Runtime.GetEngine()
 	if h == nil {

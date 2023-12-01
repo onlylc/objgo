@@ -1,7 +1,16 @@
 package middleware
 
 import (
+	"objgo/team/core/sdk"
+
 	"github.com/gin-gonic/gin"
+	jwt "objgo/team/core/sdk/pkg/jwtauth"
+)
+
+const (
+	JwtTokenCheck string = "JwtToken"
+	// RoleCheck       string = "AuthCheckRole"
+	// PermissionCheck string = "PermissionAction"
 )
 
 func InitMiddleware(r *gin.Engine) {
@@ -10,15 +19,16 @@ func InitMiddleware(r *gin.Engine) {
 	// 日志处理
 	r.Use(LoggerToFile())
 	// // 自定义错误处理
-	// r.Use(CustomError)
+	r.Use(CustomError)
 	// // NoCache is a middleware function that appends headers
-	// r.Use(NoCache)
+	r.Use(NoCache)
 	// // 跨域处理
-	// r.Use(Options)
-	// // r.Use(DemoEvn())
+	r.Use(Options)
+	r.Use(Secure)
+	// r.Use(DemoEvn())
 	// // 链路追踪
 	// // r.Use(middleware.Trace())
-	// sdk.Runtime.SetMiddleware(JwTokenCheck, (*jwt.GinJWTMiddleware).MiddlewareFunc)
+	sdk.Runtime.SetMiddleware(JwtTokenCheck, (*jwt.GinJWTMiddleware).MiddlewareFunc)
 	// sdk.Runtime.SetMiddleware(RoleCheck, AuthCheckRole())
 	// sdk.Runtime.SetMiddleware(PermissionCheck, actions.PermissionAction())
 }
