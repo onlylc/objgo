@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"objgo/cmd/api"
 	"objgo/cmd/config"
+	"objgo/cmd/migrate"
+	"objgo/cmd/version"
 	"objgo/common/global"
 	"os"
 
@@ -14,10 +16,10 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:          "go-admin",
-	Short:        "go-admin",
+	Use:          "objgo",
+	Short:        "objgo",
 	SilenceUsage: true,
-	Long:         `go-admin`,
+	Long:         `objgo`,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			tip()
@@ -40,8 +42,8 @@ func tip() {
 
 func init() {
 	rootCmd.AddCommand(api.StartCmd)
-	// rootCmd.AddCommand(migrate.StartCmd)
-	// rootCmd.AddCommand(version.StartCmd)
+	rootCmd.AddCommand(migrate.StartCmd)
+	rootCmd.AddCommand(version.StartCmd)
 	rootCmd.AddCommand(config.StartCmd)
 	// rootCmd.AddCommand(app.StartCmd)
 }

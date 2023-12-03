@@ -1,18 +1,16 @@
-package migration
+package migrate
 
 import (
-	"bytes"
 	"fmt"
-	"html/template"
+
 	"objgo/cmd/migrate/migration"
+	_ "objgo/cmd/migrate/migration/version"
+	_ "objgo/cmd/migrate/migration/version-local"
 	"objgo/common/database"
 	"objgo/common/models"
 	"objgo/team/core/config/source/file"
 	"objgo/team/core/sdk"
 	"objgo/team/core/sdk/config"
-	"objgo/team/core/sdk/pkg"
-	"strconv"
-	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -51,7 +49,7 @@ func run() {
 		)
 	} else {
 		fmt.Println(`generate migration file`)
-		_ = genFile()
+		// _ = genFile()
 	}
 }
 
@@ -82,23 +80,23 @@ func initDB() {
 	fmt.Println(`数据库基础数据初始化成功`)
 }
 
-func genFile() error {
-	t1, err := template.ParseFiles("template/migrate.template")
-	if err != nil {
-		return err
-	}
-	m := map[string]string{}
-	m["GenerateTime"] = strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
-	m["Package"] = "version_local"
-	if goAdmin {
-		m["Package"] = "version"
-	}
-	var b1 bytes.Buffer
-	err = t1.Execute(&b1, m)
-	if goAdmin {
-		pkg.FileCreate(b1, "./cmd/migrate/migration/version/"+m["GenerateTime"]+"_migrate.go")
-	} else {
-		pkg.FileCreate(b1, "./cmd/migrate/migration/version-local/"+m["GenerateTime"]+"_migrate.go")
-	}
-	return nil
-}
+// func genFile() error {
+// 	t1, err := template.ParseFiles("template/migrate.template")
+// 	if err != nil {
+// 		return err
+// 	}
+// 	m := map[string]string{}
+// 	m["GenerateTime"] = strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
+// 	m["Package"] = "version_local"
+// 	if goAdmin {
+// 		m["Package"] = "version"
+// 	}
+// 	var b1 bytes.Buffer
+// 	err = t1.Execute(&b1, m)
+// 	if goAdmin {
+// 		pkg.FileCreate(b1, "./cmd/migrate/migration/version/"+m["GenerateTime"]+"_migrate.go")
+// 	} else {
+// 		pkg.FileCreate(b1, "./cmd/migrate/migration/version-local/"+m["GenerateTime"]+"_migrate.go")
+// 	}
+// 	return nil
+// }
